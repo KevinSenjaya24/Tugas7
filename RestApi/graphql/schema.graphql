@@ -1,0 +1,34 @@
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+
+    jemaat: [Jemaat] @all
+    jemaat(id: ID @eq): Jemaat @find
+    jemaatsByFeatured(featured: Boolean! @eq): [Jemaat] @all
+    someComplexQuery(search: String!): [Jemaat]
+
+    family: [Family] @all
+    family(id: ID @eq): Family @find
+}
+
+type Jemaat {
+    id: ID!
+    title: String!
+    author: String!
+    image: String
+    link: String
+    description: String
+    featured: Boolean
+    books: [Book] @hasMany
+    category: Category! @belongsTo
+}
+
+type Family {
+    id: ID!
+    name: String!
+    books: [Book] @hasMany
+}
